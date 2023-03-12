@@ -1,8 +1,6 @@
 import { useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 
-// import { addContact } from 'Redux/contacts/contacts-slice';
-import { getContacts } from 'Redux/contacts/contacts-selectors';
 import {
   fetchAllContacts,
   fetchAddContact,
@@ -14,9 +12,8 @@ import { nanoid } from 'nanoid';
 import css from './ContactForm.module.css';
 
 export function ContactForm() {
-  const [contact, setContacts] = useState({ name: '', phone: '' }); //number => phone
+  const [contact, setContacts] = useState({ name: '', phone: '' });
 
-  const contacts = useSelector(getContacts);
   const dispatch = useDispatch();
 
   const { name, phone } = contact;
@@ -40,14 +37,6 @@ export function ContactForm() {
     event.preventDefault();
 
     const newContactItem = { name, phone };
-
-    if (
-      contacts.find(
-        item => item.name.toLowerCase() === newContactItem.name.toLowerCase()
-      )
-    ) {
-      return alert(`${newContactItem.name} is already in contacts!`);
-    }
 
     dispatch(fetchAddContact(newContactItem));
 
